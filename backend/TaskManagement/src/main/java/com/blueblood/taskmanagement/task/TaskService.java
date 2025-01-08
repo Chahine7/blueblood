@@ -1,8 +1,11 @@
 package com.blueblood.taskmanagement.task;
 
+import com.blueblood.taskmanagement.auth.User;
 import com.blueblood.taskmanagement.common.BasicCrudOperationsDAO;
 import com.blueblood.taskmanagement.exceptions.RequestValidationException;
 import com.blueblood.taskmanagement.exceptions.ResourceNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,7 +25,8 @@ public class TaskService {
     }
 
     public List<TaskDTO> getAllTasks(Boolean completed, String sortBy, String order) {
-        Stream<Task> taskStream = taskDAO.findAll().stream();
+        User loggedInUser = getCurrentUser();
+        Stream<Task> taskStream = taskDAO.getTasksForLoggedInUser(loggedInUser.getId()).stream();
 
         if (completed != null) {
             taskStream = taskStream.filter(task -> task.isCompleted() == completed);
@@ -35,6 +39,11 @@ public class TaskService {
 
         return taskStream.map(taskDTOMapper)
                 .collect(Collectors.toList());
+    }
+
+    private static User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 
     private static Comparator<Task> getTaskComparator(String sortBy, String order) {
@@ -53,6 +62,7 @@ public class TaskService {
     public Integer addTask(AddTaskRequest addTaskRequest) {
         Task task = new Task(addTaskRequest.name(), addTaskRequest.description(), false, LocalDateTime.now());
 
+        task.setUser(getCurrentUser());
         taskDAO.insertEntity(task);
 
         return task.getId();

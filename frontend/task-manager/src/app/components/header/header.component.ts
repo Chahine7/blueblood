@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {MenubarModule} from "primeng/menubar";
 import {NgIf} from "@angular/common";
 import {ButtonModule} from "primeng/button";
+import {AuthenticationResponse} from "../../models/authentication-response";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-header',
@@ -15,13 +17,23 @@ import {ButtonModule} from "primeng/button";
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-/*
   isLoggedIn(): boolean {
+    if (typeof window !== 'undefined' && window.localStorage) {
 
-    return !!localStorage.getItem('authToken');
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const authResponse: AuthenticationResponse = JSON.parse(storedUser);
+        const token = authResponse.token;
+        if (token) {
+          const jwtHelper = new JwtHelperService();
+          return !jwtHelper.isTokenExpired(token);
+        }
+      }
+    }
+    return false;
   }
 
   logout() {
-    localStorage.removeItem('authToken');
-  }*/
+    localStorage.removeItem("user");
+  }
 }

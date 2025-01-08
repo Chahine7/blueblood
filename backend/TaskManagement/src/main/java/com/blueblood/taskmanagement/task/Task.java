@@ -1,5 +1,6 @@
 package com.blueblood.taskmanagement.task;
 
+import com.blueblood.taskmanagement.auth.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -28,6 +29,11 @@ public class Task {
     private boolean completed;
 
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 
     public Task() {
     }
@@ -106,5 +112,13 @@ public class Task {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

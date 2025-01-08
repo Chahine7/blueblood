@@ -43,4 +43,9 @@ public class TaskDataAccessService implements BasicCrudOperationsDAO<Task> {
     public boolean existsEntityWithId(Integer taskId) {
         return taskRepository.existsTaskById(taskId);
     }
+
+    @Override
+    public List<Task> getTasksForLoggedInUser(Integer userId) {
+        return taskRepository.findAllByUserId(userId);
+    }
 }

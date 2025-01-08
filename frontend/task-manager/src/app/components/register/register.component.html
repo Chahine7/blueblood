@@ -1,0 +1,53 @@
+<p-card>
+  <div class="register-container">
+
+      <div class="p-field">
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text" pInputText
+               placeholder="Enter Full Name"
+               [(ngModel)]="userRegistrationRequest.name"
+               name="fullName"
+               required>
+      </div>
+
+
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input id="email" type="email" pInputText
+               placeholder="Enter email"
+               [(ngModel)]="userRegistrationRequest.email"
+               name="email"
+               required>
+      </div>
+
+
+      <div class="p-field">
+        <label for="password">Mot De Passe</label>
+        <input id="password" type="password" pPassword
+               placeholder="Enter Password"
+               [(ngModel)]="userRegistrationRequest.password"
+               name="password"
+               required>
+      </div>
+
+      <div class="p-field">
+        <button pButton
+                type="button"
+                label="Register"
+                class="p-button-raised p-button-primary"
+                (click)="register()"
+               >
+        </button>
+      </div>
+
+    <div class="p-field">
+      <p>Already have account?
+        <button pButton type="button" label="Login"
+
+                class="p-button-link"
+                (click)="login()">
+        </button>
+      </p>
+    </div>
+  </div>
+</p-card>

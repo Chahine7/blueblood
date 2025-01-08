@@ -1,0 +1,52 @@
+
+<p-card>
+  <div class="login-container">
+
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" pInputText
+             placeholder="Enter  email"
+             [(ngModel)]="authenticationRequest.username"
+             name="email"
+             required>
+    </div>
+
+
+    <div class="p-field">
+      <label for="password">Password</label>
+      <input id="password" type="password" pPassword
+             placeholder="Enter Password"
+             [(ngModel)]="authenticationRequest.password"
+             name="password"
+             required>
+    </div>
+
+    <div class="p-field">
+      <button pButton
+              type="button"
+              label="Login"
+              class="p-button-raised p-button-primary"
+              (click)="login()">
+      </button>
+    </div>
+
+    <!-- Login Prompt -->
+    <div class="p-field login-prompt">
+      <p>Don't have an account ?
+        <button pButton
+                type="button"
+                label="Register"
+                class="p-button-link"
+                (click)="register()">
+        </button>
+      </p>
+    </div>
+
+  </div>
+</p-card>

@@ -7,11 +7,11 @@
 
 
   <ng-template pTemplate="end">
-    <button  pButton label="Acceuil" class="p-button-text" [routerLink]="['/home']"></button>
-    <button  pButton label="Logout" class="p-button-text" [routerLink]="['/login']"></button>
+    <button  pButton label="Acceuil" *ngIf="isLoggedIn()" class="p-button-text" [routerLink]="['/home']"></button>
+    <button  pButton label="Logout" *ngIf="isLoggedIn(); else loginButton" class="p-button-text" [routerLink]="['/login']" (click)="logout()"></button>
     <ng-template #loginButton>
       <button pButton label="Login" class="p-button-text" [routerLink]="['/login']"></button>
     </ng-template>
-    <button  pButton label="Register" class="p-button-text" [routerLink]="['/register']"></button>
+    <button  pButton label="Register"  *ngIf="!isLoggedIn()" class="p-button-text" [routerLink]="['/register']"></button>
   </ng-template>
 </p-menubar>
