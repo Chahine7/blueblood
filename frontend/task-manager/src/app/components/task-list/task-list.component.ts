@@ -10,7 +10,7 @@ import {FormsModule} from "@angular/forms";
 import {AddTaskRequest} from "../../models/AddTaskRequest";
 import {TaskTableComponent} from "../task-table/task-table.component";
 import {NgIf} from "@angular/common";
-import {TaskDTO} from "../../models/TaskDTO";
+
 import {CheckboxModule} from "primeng/checkbox";
 
 @Component({

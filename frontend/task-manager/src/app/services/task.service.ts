@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable, map, startWith} from "rxjs";
 import {TaskDTO} from "../models/TaskDTO";
 import {AddTaskRequest} from "../models/AddTaskRequest";
@@ -14,8 +14,14 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  getAllTasks(): Observable<TaskDTO[]> {
-    return this.http.get<TaskDTO[]>(this.apiUrl).pipe(
+  getAllTasks(sortBy?: string, order?: string, completed?: boolean): Observable<TaskDTO[]> {
+    let params = new HttpParams();
+
+    if (sortBy) params = params.set('sortBy', sortBy);
+    if (order) params = params.set('order', order);
+    if (completed !== undefined) params = params.set('completed', completed.toString());
+
+    return this.http.get<TaskDTO[]>(this.apiUrl, { params }).pipe(
       map((tasks) => tasks ?? []),
       startWith([])
     );

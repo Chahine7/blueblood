@@ -8,7 +8,6 @@
     <label for="name" class="font-semibold w-6rem">Task Name</label>
     <input pInputText id="name" class="flex-auto" [(ngModel)]="addTaskRequest.name" name="name" autocomplete="off" />
   </div>
-
   <div class="flex align-items-center gap-3 mb-5">
     <label for="description" class="font-semibold w-6rem">Description</label>
     <input pInputText id="description" class="flex-auto" [(ngModel)]="addTaskRequest.description" name="description" autocomplete="off" />
@@ -24,7 +23,7 @@
 
   <div class="flex justify-content-end gap-2">
     <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
-    <p-button (onClick)="saveTask()">{{isEditMode? 'Edit' : 'Save'}}</p-button>
+    <p-button [disabled]="!addTaskRequest.name" (onClick)="saveTask()">{{isEditMode? 'Edit' : 'Save'}}</p-button>
   </div>
 </p-dialog>
 

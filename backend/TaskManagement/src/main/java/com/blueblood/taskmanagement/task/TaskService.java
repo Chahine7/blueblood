@@ -6,8 +6,10 @@ import com.blueblood.taskmanagement.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class TaskService {
@@ -19,11 +21,34 @@ public class TaskService {
         this.taskDTOMapper = taskDTOMapper;
     }
 
-    public List<TaskDTO> getAllTasks() {
-        return taskDAO.findAll()
-                .stream().map(taskDTOMapper)
+    public List<TaskDTO> getAllTasks(Boolean completed, String sortBy, String order) {
+        Stream<Task> taskStream = taskDAO.findAll().stream();
+
+        if (completed != null) {
+            taskStream = taskStream.filter(task -> task.isCompleted() == completed);
+        }
+
+        if (sortBy != null) {
+            Comparator<Task> comparator = getTaskComparator(sortBy, order);
+            taskStream = taskStream.sorted(comparator);
+        }
+
+        return taskStream.map(taskDTOMapper)
                 .collect(Collectors.toList());
     }
+
+    private static Comparator<Task> getTaskComparator(String sortBy, String order) {
+        Comparator<Task> comparator = switch (sortBy) {
+            case "creationDate" -> Comparator.comparing(Task::getCreatedAt);
+            case "name" -> Comparator.comparing(Task::getName);
+            default -> throw new RequestValidationException("Invalid sortBy field: " + sortBy);
+        };
+        if ("desc".equalsIgnoreCase(order)) {
+            comparator = comparator.reversed();
+        }
+        return comparator;
+    }
+
 
     public Integer addTask(AddTaskRequest addTaskRequest) {
         Task task = new Task(addTaskRequest.name(), addTaskRequest.description(), false, LocalDateTime.now());

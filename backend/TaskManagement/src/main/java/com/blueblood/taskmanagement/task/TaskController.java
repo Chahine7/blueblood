@@ -18,8 +18,12 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> getAllTasks() {
-        List<TaskDTO> tasks = taskService.getAllTasks();
+    public ResponseEntity<List<TaskDTO>> getAllTasks(
+            @RequestParam(required = false) Boolean completed,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String order) {
+
+        List<TaskDTO> tasks = taskService.getAllTasks(completed, sortBy, order);
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
