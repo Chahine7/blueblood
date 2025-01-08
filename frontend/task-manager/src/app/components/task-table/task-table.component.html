@@ -1,0 +1,38 @@
+<p-table [value]="(tasks$ | async)!"
+         *ngIf="(tasks$ | async)!.length>0"
+         [paginator]="true"
+         [rows]="5"
+         [sortField]="'creationDate'"
+         [sortMode]="'single'"
+         [responsiveLayout]="'scroll'">
+  <ng-template pTemplate="header">
+    <tr>
+      <th >Task Name </th>
+      <th >Description </th>
+      <th >Completed </th>
+      <th pSortableColumn="creationDate">Creation Date <p-sortIcon field="creationDate"></p-sortIcon></th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-task>
+    <tr>
+      <td>{{ task.name }}</td>
+      <td>{{ task.description }}</td>
+      <td>
+        <i *ngIf="!task.completed" class="pi pi-times" style="color: red"></i>
+        <i *ngIf="task.completed" class="pi pi-check" style="color: green"></i>
+      </td>
+
+      <td>{{ task.createdAt | date: 'mediumDate' }}</td>
+      <td>
+        <p-button label="Edit"  [text]="true" [raised]="false" (onClick)="onEditTask(task)"/>
+        <p-button label="Delete" [text]="true" [raised]="false" (onClick)="onDeleteTask(task)" severity="danger"  />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<div *ngIf="(tasks$ | async)?.length === 0" class="p-d-flex p-ai-center p-jc-center empty-message">
+  <p-message  severity="error" text=" You haven't added any tasks Yet">
+  </p-message>
+</div>

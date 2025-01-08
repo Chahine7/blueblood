@@ -1,0 +1,17 @@
+<p-menubar  styleClass="header-menubar">
+  <ng-template pTemplate="start">
+    <span class="header-title">
+      <img src="../../../assets/Task-manager-png.png" alt="Task Manager" class="logo">
+    </span>
+  </ng-template>
+
+
+  <ng-template pTemplate="end">
+    <button  pButton label="Acceuil" class="p-button-text" [routerLink]="['/home']"></button>
+    <button  pButton label="Logout" class="p-button-text" [routerLink]="['/login']"></button>
+    <ng-template #loginButton>
+      <button pButton label="Login" class="p-button-text" [routerLink]="['/login']"></button>
+    </ng-template>
+    <button  pButton label="Register" class="p-button-text" [routerLink]="['/register']"></button>
+  </ng-template>
+</p-menubar>

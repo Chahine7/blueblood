@@ -1,0 +1,19 @@
+.header-menubar {
+  border-radius: 5px;
+  background-color: #007ad9;
+  color: white;
+}
+
+.header-title img.logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.header-menubar ::ng-deep .p-menubar-end .p-button {
+  color: white;
+  margin-left: 10px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
