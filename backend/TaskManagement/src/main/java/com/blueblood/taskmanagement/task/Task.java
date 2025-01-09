@@ -44,7 +44,13 @@ public class Task {
         this.completed = completed;
         this.createdAt = createdAt;
     }
-
+    public Task(Integer id, String name, String description, boolean completed, LocalDateTime createdAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.completed = completed;
+        this.createdAt = createdAt;
+    }
     @Override
     public String toString() {
         return "Task{" +
