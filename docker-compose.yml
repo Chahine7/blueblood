@@ -1,0 +1,24 @@
+services:
+  blueblood_api:
+    container_name: blueblood_api
+    image: 11098078/blueblood_api:v1
+    build:
+      context: backend/TaskManagement
+    ports:
+      - "8080:8080"
+    networks:
+      - bb
+    restart: unless-stopped
+  blueblood:
+    container_name: blueblood
+    image: 11098078/blueblood:v1
+    build:
+      context: frontend/task-manager
+    ports:
+      - "4200:4000"
+    depends_on:
+      - blueblood_api
+    restart: unless-stopped
+networks:
+  bb:
+    driver: bridge
